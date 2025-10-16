@@ -1,59 +1,53 @@
 import dash
-from dash import html, dcc, Input, Output, State, callback
-import plotly.graph_objects as go
-import numpy as np
-from utils.funciones import generar_graf_pob_exp
+from dash import html, dcc, Output, Input, State, callback
+from utils.funciones import funcion_graficas_ecu_log
 
-dash.register_page(__name__, path='/exponencial-interactivo', name='Exponencial Interactivo')
-
-# Layout inicial con valores por defecto
-layout = html.Div(children=[  
-    html.Div(children=[  
-            # Controles de entrada
-html.H2("Crecimiento Exponencial de la Población", className="title"), 
-            html.Div([
-                html.Div([
-                    html.Label("Población inicial P(0):", className="input-label"),
-                    dcc.Input(id="input-p0", type="number", value=100, min=1, className="input-field")
-                ], className="input-group"),
-                
-                html.Div([
-                    html.Label("Tasa de crecimiento (r):", className="input-label"),
-                    dcc.Input(id="input-r", type="number", value=0.03, step=0.01, min=0.01, className="input-field")
-                ], className="input-group"),
-                
-                html.Div([
-                    html.Label("Tiempo máximo (t):", className="input-label"),
-                    dcc.Input(id="input-t", type="number", value=100, min=10, className="input-field")
-                ], className="input-group"),
-                
-                html.Button("Generar gráfica", id="btn-generar", className="btn-generar")
-            ], className="controls-container")
-        ], className="left-container"),
-        
-        # Contenedor derecho  
-        html.Div(children=[
-            html.H2("Gráfica del Modelo Exponencial", className="title"),
-            html.Div([
-                dcc.Graph(
-                    id='grafico-crecimiento',
-                    config={'displayModeBar': False},
-                    style={'height': '500px', 'width': '100%'}
-                )
-            ], className="graph-container")
-        ], className="right-container")
-    ], className="main-container")
+dash.register_page(__name__, path='/modelo-logistico', name='Modelo Logístico')
 
 
-# Callback para actualizar la gráfica
+layout = html.Section(className='content-section', children=[
+    html.Div(className='text-content', children=[
+        html.H2("Modelo Logístico Interactivo"),
+        html.P("Ajusta los parámetros a continuación y presiona 'Generar' para visualizar el modelo de crecimiento logístico. Este modelo describe cómo una población crece y se estabiliza al alcanzar su capacidad de carga.")
+    ]),
+
+
+    html.Div(className='interactive-container', children=[
+        # Panel de controles
+        html.Div(className='controls-panel', children=[
+            html.H4("Parámetros del Modelo"),
+            html.Label("Población Inicial (P₀)"),
+            dcc.Input(id="p0-logistico", type="number", value=50, className="input-field"),
+
+            html.Label("Tasa de Crecimiento (r)"),
+            dcc.Input(id="r-logistico", type="number", value=0.2, step=0.01, className="input-field"),
+
+            html.Label("Capacidad de Carga (K)"),
+            dcc.Input(id="k-logistico", type="number", value=1000, className="input-field"),
+
+            html.Label("Tiempo Máximo (t)"),
+            dcc.Input(id="tmax-logistico", type="number", value=80, className="input-field"),
+
+            html.Button("Generar Gráfica", id="btn-logistico", n_clicks=0, className="btn-generar")
+        ]),
+        # Panel de la gráfica
+        html.Div(className='graph-panel', children=[
+            dcc.Graph(id="grafica-logistica")
+        ])
+    ])
+])
+
+
 @callback(
-    Output('grafico-crecimiento', 'figure'),
-    Input('btn-generar', 'n_clicks'),
-    State('input-p0', 'value'),
-    State('input-r', 'value'),
-    State('input-t', 'value'),
-    prevent_initial_call=False
+    Output('grafica-logistica', 'figure'),
+    Input('btn-logistico', 'n_clicks'),
+    State('p0-logistico', 'value'),
+    State('r-logistico', 'value'),
+    State('k-logistico', 'value'),
+    State('tmax-logistico', 'value'),
+    prevent_initial_call=False 
 )
-def actualizar_grafica(n_clicks, P0, r, t_max):
-    fig = generar_graf_pob_exp(P0, r, t_max)
+def update_logistic_graph(n_clicks, p0, r, k, tmax):
+ 
+    fig = funcion_graficas_ecu_log(P0=p0, r=r, K=k, t_max=tmax)
     return fig
