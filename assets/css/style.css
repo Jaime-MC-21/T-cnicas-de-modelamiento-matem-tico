@@ -128,4 +128,59 @@ body {
 
 .graph-content {
     margin-top: 2rem;
+
+}
+
+
+.interactive-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.controls-panel {
+    flex: 1;
+    padding: 1.5rem;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.controls-panel h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.controls-panel .input-field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.controls-panel .btn-generar {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #2c3e50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.controls-panel .btn-generar:hover {
+    background-color: #4e6a87;
+}
+
+.graph-panel {
+    flex: 2;
 }
