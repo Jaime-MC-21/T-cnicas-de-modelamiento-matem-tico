@@ -1,70 +1,55 @@
 import dash
-from dash import html, dcc, Input, Output, State, callback
-import numpy as np
-import plotly.graph_objects as go
+from dash import html, dcc, Output, Input, State, callback
+from utils.funciones import funcion_grafica_logistica_con_cosecha
 
-from utils.funciones import generar_grafico_logistico
+dash.register_page(__name__, path='/modelo-con-cosecha', name='Modelo con Cosecha')
 
-dash.register_page(__name__, path='/logistico-interactivo', name='Logístico Interactivo')
+layout = html.Section(className='content-section', children=[
+    html.Div(className='text-content', children=[
+        html.H2("Modelo Logístico con Cosecha"),
+        html.P("Este modelo simula el efecto de remover una cantidad constante (cosecha) de la población en cada unidad de tiempo. Observa cómo diferentes niveles de cosecha pueden afectar la sostenibilidad de la población.")
+    ]),
 
+    html.Div(className='interactive-container', children=[
 
-# Layout inicial
-layout = html.Div(children=[  
-    html.Div(children=[
-        # Contenedor izquierdo  
-        html.Div(children=[  
-            html.H2("Crecimiento Logístico Interactivo", className="title"),  
+        html.Div(className='controls-panel', children=[
+            html.H4("Parámetros del Modelo"),
+            html.Label("Población Inicial (P₀)"),
+            dcc.Input(id="p0-cosecha", type="number", value=500, className="input-field"),
+
+            html.Label("Tasa de Crecimiento (r)"),
+            dcc.Input(id="r-cosecha", type="number", value=0.25, step=0.01, className="input-field"),
+
+            html.Label("Capacidad de Carga (K)"),
+            dcc.Input(id="k-cosecha", type="number", value=1000, className="input-field"),
+
+            html.Label("Tiempo Máximo (t)"),
+            dcc.Input(id="tmax-cosecha", type="number", value=100, className="input-field"),
             
-            html.Div([
-                html.Div([
-                    html.Label("Población inicial P₀:", className="input-label"),
-                    dcc.Input(id="input-p0-logistico", type="number", value=100, min=1, className="input-field")
-                ], className="input-group"),
-                
-                html.Div([
-                    html.Label("Tasa de crecimiento (r):", className="input-label"),
-                    dcc.Input(id="input-r-logistico", type="number", value=0.1, step=0.01, className="input-field")
-                ], className="input-group"),
-                
-                html.Div([
-                    html.Label("Capacidad de carga (K):", className="input-label"),
-                    dcc.Input(id="input-k-logistico", type="number", value=1000, min=1, className="input-field")
-                ], className="input-group"),
-                
-                html.Div([
-                    html.Label("Tiempo máximo (t):", className="input-label"),
-                    dcc.Input(id="input-t-max-logistico", type="number", value=100, min=10, className="input-field")
-                ], className="input-group"),
-                
-                html.Button("Generar gráfica", id="btn-generar-logistico", className="btn-generar")
-            ], className="controls-container")
-            
-        ], className="left-container"),
-        
-        # Contenedor derecho  
-        html.Div(children=[
-            html.H2("Gráfica del Modelo Logistico", className="title"),
-            html.Div([
-                dcc.Graph(
-                    id='grafico-logistico-interactivo',
-                    config={'displayModeBar': True},
-                    style={'height': '500px', 'width': '100%'}
-                )
-            ], className="graph-container"),
-        ], className="right-container")
-    ], className="main-container")
+            html.Label("Tasa de Cosecha (h)"),
+            dcc.Input(id="h-cosecha", type="number", value=50, className="input-field"),
+
+            html.Button("Generar Gráfica", id="btn-cosecha", n_clicks=0, className="btn-generar")
+        ]),
+
+        html.Div(className='graph-panel', children=[
+            dcc.Graph(id="grafica-cosecha")
+        ])
+    ])
 ])
 
-# Callback para actualizar la gráfica logística
+
 @callback(
-    Output('grafico-logistico-interactivo', 'figure'),
-    Input('btn-generar-logistico', 'n_clicks'),
-    [State('input-p0-logistico', 'value'),
-     State('input-r-logistico', 'value'),
-     State('input-k-logistico', 'value'),
-     State('input-t-max-logistico', 'value')],
-    prevent_initial_call=False
+    Output('grafica-cosecha', 'figure'),
+    Input('btn-cosecha', 'n_clicks'),
+    State('p0-cosecha', 'value'),
+    State('r-cosecha', 'value'),
+    State('k-cosecha', 'value'),
+    State('tmax-cosecha', 'value'),
+    State('h-cosecha', 'value'),
+    prevent_initial_call=False 
 )
-def actualizar_grafica_logistica(n_clicks, P0, r, K, t_max):
-    fig = generar_grafico_logistico(P0, r, K, t_max)
+def update_harvest_graph(n_clicks, p0, r, k, tmax, h):
+
+    fig = funcion_grafica_logistica_con_cosecha(P0=p0, r=r, K=k, t_max=tmax, h=h)
     return fig
