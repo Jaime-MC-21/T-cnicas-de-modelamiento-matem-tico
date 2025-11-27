@@ -311,3 +311,42 @@ def generar_modelo_seir(N, E0, I0, beta, sigma, gamma, T):
     fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#e0e0e0', range=[0, N*1.05])
     
     return fig
+
+
+# utils/funciones.py (Añadir al final)
+import requests
+
+def obtener_datos_covid_actuales(pais):
+    """Consulta la API de disease.sh para datos actuales"""
+    try:
+        url = f"https://disease.sh/v3/covid-19/countries/{pais}"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            return response.json()
+        return None
+    except:
+        return None
+
+def obtener_datos_covid_historicos(pais, dias):
+    
+    try:
+        # 'all' trae todo el historial, si es un número trae esos días
+        url = f"https://disease.sh/v3/covid-19/historical/{pais}?lastdays={dias}"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            return response.json()
+        return None
+    except:
+        return None
+
+def buscar_personajes_rickmorty(nombre):
+    
+    try:
+        url = f"https://rickandmortyapi.com/api/character/?name={nombre}"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            return data['results'] # Retorna la lista de personajes
+        return []
+    except:
+        return []
