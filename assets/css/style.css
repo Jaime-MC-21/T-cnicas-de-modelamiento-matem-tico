@@ -367,3 +367,121 @@ body {
     border-radius: 8px;
     border: 1px solid #b2ebf2;
 }
+
+
+
+.dashboard-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.panel-izquierdo {
+    flex: 0 0 25%; 
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    height: fit-content;
+}
+
+.panel-derecho {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dropdown-estilo {
+    margin-bottom: 15px;
+}
+
+
+.cards-container {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.info-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.info-card h4 { margin: 0; opacity: 0.9; font-size: 0.9rem; }
+.info-card h3 { margin: 5px 0 0 0; font-size: 1.8rem; font-weight: bold; }
+
+
+.card-blue { background-color: #3498db; }
+.card-orange { background-color: #f39c12; }
+.card-red { background-color: #e74c3c; }
+.card-green { background-color: #27ae60; }
+
+.grafica-container {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+
+
+.rm-page {
+    padding: 40px;
+    text-align: center;
+}
+
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid-resultados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.rm-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.rm-card:hover {
+    transform: translateY(-5px);
+}
+
+.rm-card img {
+    width: 100%;
+    height: auto;
+}
+
+.rm-card-info {
+    padding: 15px;
+    text-align: left;
+}
+
+.rm-card-info h4 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+}
+
+.rm-card-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
