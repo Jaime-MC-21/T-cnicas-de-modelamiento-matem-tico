@@ -7,7 +7,7 @@ dash.register_page(__name__, path='/api-rick-morty', name='API de Rick & Morty')
 
 layout = html.Div(className='rm-page', children=[
     html.H1("Rick and Morty"),
-    html.P("Coloca el nombre de aun personaje de la serie"),
+    html.P("Coloca el nombre de un personaje de la serie"),
     
     html.Div(className='search-bar-container', children=[
         dcc.Input(id='input-personaje', type='text', value='Rick', placeholder="Escribe un nombre (ej: Morty)", className='input-field'),
@@ -46,3 +46,4 @@ def actualizar_grid(n_clicks, nombre):
         tarjetas.append(tarjeta)
         
     return tarjetas
+
