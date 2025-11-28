@@ -3,7 +3,7 @@ import dash
 from dash import html, dcc, Output, Input, State, callback
 from utils.funciones import generar_grafica_gripe_san_marcos, generar_grafica_rumor, generar_grafica_app
 
-dash.register_page(__name__, path='/modelos-integrados', name='PROYECTO FINAL', order=11)
+dash.register_page(__name__, path='/modelos-integrados', name='DASHBOARD DEL PROYECTO FINAL', order=11)
 
 layout = html.Div(className='dashboard-container', children=[
     html.H1("Graficas interactivas de las asignaciones", style={'width': '100%', 'textAlign': 'center', 'marginBottom': '20px', 'color': '#2c3e50'}),
