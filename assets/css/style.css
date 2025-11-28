@@ -485,3 +485,87 @@ body {
     font-size: 0.9rem;
     color: #666;
 }
+
+
+/* --- ESTILOS UNIFICADOS PARA DASHBOARDS (Páginas 8 y 10) --- */
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: flex-start; 
+}
+
+
+.panel-izquierdo {
+    flex: 1 1 300px; 
+    max-width: 350px; 
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    height: fit-content; 
+}
+
+
+.panel-derecho {
+    flex: 3 1 600px; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.titulo-seccion {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.dropdown-estilo {
+    margin-bottom: 20px;
+}
+
+
+.cards-container {
+    display: grid;
+ 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    gap: 15px;
+}
+
+.info-card {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+}
+
+.info-card h4 { margin: 0; opacity: 0.9; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+.info-card h3 { margin: 10px 0 0 0; font-size: 1.6rem; font-weight: 700; }
+
+
+.card-blue { background: linear-gradient(135deg, #3498db, #2980b9); }
+.card-orange { background: linear-gradient(135deg, #f39c12, #d35400); }
+.card-red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+.card-green { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+
+.grafica-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    min-height: 450px; 
+}
