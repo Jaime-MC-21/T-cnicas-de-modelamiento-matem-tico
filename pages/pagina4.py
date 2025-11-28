@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, Output, Input, State, callback
 from utils.funciones import funcion_grafica_logistica_con_cosecha
 
-dash.register_page(__name__, path='/modelo-con-cosecha', name='Modelo con Cosecha')
+dash.register_page(__name__, path='/modelo-con-cosecha', name='Modelo con Cosecha', order=4)
 
 layout = html.Section(className='content-section', children=[
     html.Div(className='text-content', children=[
