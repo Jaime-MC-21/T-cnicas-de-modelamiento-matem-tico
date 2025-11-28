@@ -313,7 +313,6 @@ def generar_modelo_seir(N, E0, I0, beta, sigma, gamma, T):
     return fig
 
 
-# utils/funciones.py (Añadir al final)
 import requests
 
 def obtener_datos_covid_actuales(pais):
@@ -330,7 +329,7 @@ def obtener_datos_covid_actuales(pais):
 def obtener_datos_covid_historicos(pais, dias):
     
     try:
-        # 'all' trae todo el historial, si es un número trae esos días
+        
         url = f"https://disease.sh/v3/covid-19/historical/{pais}?lastdays={dias}"
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
@@ -346,7 +345,33 @@ def buscar_personajes_rickmorty(nombre):
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
             data = response.json()
-            return data['results'] # Retorna la lista de personajes
+            return data['results'] 
         return []
     except:
         return []
+
+
+
+def obtener_pronostico_clima(lat, lon):
+    """
+    Consulta la API de Open-Meteo para obtener datos meteorológicos.
+    Devuelve datos horarios (temperatura, humedad, viento) y condiciones actuales.
+    """
+    try:
+        url = "https://api.open-meteo.com/v1/forecast"
+        params = {
+            "latitude": lat,
+            "longitude": lon,
+            "hourly": "temperature_2m,relative_humidity_2m,wind_speed_10m,shortwave_radiation",
+            "current": "temperature_2m,relative_humidity_2m,wind_speed_10m,is_day",
+            "timezone": "auto",
+            "forecast_days": 3
+        }
+        response = requests.get(url, params=params, timeout=10)
+        
+        if response.status_code == 200:
+            return response.json()
+        return None
+    except Exception as e:
+        print(f"Error en API Clima: {e}")
+        return None
