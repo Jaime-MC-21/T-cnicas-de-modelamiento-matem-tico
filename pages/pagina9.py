@@ -3,7 +3,7 @@ import dash
 from dash import html, dcc, Output, Input, State, callback
 from utils.funciones import buscar_personajes_rickmorty
 
-dash.register_page(__name__, path='/api-rick-morty', name='API de Rick & Morty')
+dash.register_page(__name__, path='/api-rick-morty', name='API de Rick & Morty', order=9)
 
 layout = html.Div(className='rm-page', children=[
     html.H1("Rick and Morty"),
