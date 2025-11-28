@@ -4,7 +4,7 @@ from dash import html, dcc, Output, Input, State, callback
 import plotly.graph_objects as go
 from utils.funciones import obtener_datos_covid_actuales, obtener_datos_covid_historicos
 
-dash.register_page(__name__, path='/dashboard-covid', name='Dashboard COVID')
+dash.register_page(__name__, path='/dashboard-covid', name='Dashboard COVID', order=8)
 
 layout = html.Div(className='dashboard-container', children=[
     
