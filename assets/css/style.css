@@ -569,3 +569,36 @@ body {
     border: 1px solid #eee;
     min-height: 450px; 
 }
+
+
+
+.tab-content {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #d6d6d6;
+    border-top: none;
+    background-color: #f9f9f9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+.btn-mini {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+.btn-mini.success { background-color: #27ae60; }
+.btn-mini.danger { background-color: #c0392b; }
+
+
+@media (max-width: 800px) {
+    .tab-content {
+        flex-direction: column;
+    }
+}
