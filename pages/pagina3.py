@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, Output, Input, State, callback
 from utils.funciones import funcion_graficas_ecu_log
 
-dash.register_page(__name__, path='/modelo-logistico', name='Modelo Logístico')
+dash.register_page(__name__, path='/modelo-logistico', name='Modelo Logístico', order=3)
 
 
 layout = html.Section(className='content-section', children=[
@@ -13,7 +13,7 @@ layout = html.Section(className='content-section', children=[
 
 
     html.Div(className='interactive-container', children=[
-        # Panel de controles
+        
         html.Div(className='controls-panel', children=[
             html.H4("Parámetros del Modelo"),
             html.Label("Población Inicial (P₀)"),
