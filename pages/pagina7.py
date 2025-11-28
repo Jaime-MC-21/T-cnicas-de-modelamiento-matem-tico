@@ -4,7 +4,7 @@ import dash
 from dash import html, dcc, Output, Input, State, callback
 from utils.funciones import generar_modelo_seir 
 
-dash.register_page(__name__, path='/modelo-seir', name='Modelo SEIR')
+dash.register_page(__name__, path='/modelo-seir', name='Modelo SEIR', order=7)
 
 
 layout = html.Div(className='epidemic-page-container', children=[
