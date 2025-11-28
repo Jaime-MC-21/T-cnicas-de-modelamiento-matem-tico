@@ -4,7 +4,7 @@ import dash
 from dash import html, dcc, Output, Input, State, callback
 from utils.funciones import generar_campo_vectorial 
 
-dash.register_page(__name__, path='/campo-vectorial', name='Campo Vectorial 2D')
+dash.register_page(__name__, path='/campo-vectorial', name='Campo Vectorial 2D', order=5)
 
 
 layout = html.Div(className='campo-vectorial-page', children=[
