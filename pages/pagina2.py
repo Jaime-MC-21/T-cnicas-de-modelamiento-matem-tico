@@ -47,7 +47,7 @@ fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#f0f0f0', zerolinecolor=
 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#f0f0f0', zerolinecolor='#cccccc')
 
 
-dash.register_page(__name__, path='/Clase_2', name='Crecimiento Logístico')
+dash.register_page(__name__, path='/Clase_2', name='Crecimiento Logístico', order=2)
 
 layout = html.Section(className='content-section', children=[
     html.Div(className='text-content', children=[
