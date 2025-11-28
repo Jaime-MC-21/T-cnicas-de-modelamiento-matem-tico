@@ -47,8 +47,7 @@ fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#f0f0f0', zerolinecolor=
 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#f0f0f0', zerolinecolor='#cccccc')
 
 
-dash.register_page(__name__, path='/Clase_1', name='Crecimiento Exponencial')
-
+dash.register_page(__name__, path='/Clase_1', name='Crecimiento Exponencial', order=1)
 layout = html.Section(className='content-section', children=[
     html.Div(className='text-content', children=[
         html.H2("Modelo de Crecimiento Exponencial"),
