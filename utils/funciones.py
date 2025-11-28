@@ -1,6 +1,7 @@
 import numpy as np
 import plotly.graph_objects as go
 from scipy.integrate import odeint
+import requests
 
 def funcion_graficas_ecu_log(P0, r, K, t_max):
 
@@ -375,3 +376,128 @@ def obtener_pronostico_clima(lat, lon):
     except Exception as e:
         print(f"Error en API Clima: {e}")
         return None
+
+
+
+import numpy as np
+
+
+def generar_grafica_gripe_san_marcos(N, I0, R0, k, t_max):
+    b = 1.0 / N
+    S0 = N - I0 - R0
+    y0 = [S0, I0, R0]
+    t = np.linspace(0, t_max, 300)
+
+    def deriv(y, t, b, k):
+        S, I, R = y
+        dSdt = -b * S * I
+        dIdt = b * S * I - k * I
+        dRdt = k * I
+        return [dSdt, dIdt, dRdt]
+
+    ret = odeint(deriv, y0, t, args=(b, k))
+    S, I, R = ret.T
+   
+    pico_idx = np.argmax(I)
+    tiempo_pico = t[pico_idx]
+    pico_val = I[pico_idx]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=t, y=S, name='Susceptibles', line=dict(color='green')))
+    fig.add_trace(go.Scatter(x=t, y=I, name='Infectados', line=dict(color='red')))
+    fig.add_trace(go.Scatter(x=t, y=R, name='Recuperados', line=dict(color='blue')))
+    
+    fig.add_trace(go.Scatter(
+        x=[tiempo_pico], y=[pico_val],
+        mode='markers+text',
+        name='Pico',
+        text=[f"{int(pico_val)}"],
+        textposition="top center",
+        textfont=dict(color='black'),
+        marker=dict(color='black', size=8, symbol='star')
+    ))
+
+    fig.update_layout(
+        title=f'<b>Gripe en San Marcos</b>',
+        xaxis_title='Días',
+        yaxis_title='Estudiantes',
+        paper_bgcolor='white',
+        plot_bgcolor='#f9f9f9',
+        font=dict(family='Poppins', size=12, color='black'),
+        margin=dict(l=50, r=30, t=50, b=80), 
+        hovermode='x unified',
+       
+        legend=dict(orientation="h", y=-0.2, x=0.5, xanchor="center")
+    )
+    return fig
+
+def generar_grafica_rumor(N, I0, R0, b, k, t_max):
+    S0 = N - I0 - R0
+    y0 = [S0, I0, R0]
+    t = np.linspace(0, t_max, 300)
+
+    def deriv(y, t, b, k):
+        S, I, R = y
+        dSdt = -b * S * I
+        dIdt = b * S * I - k * I * R
+        dRdt = k * I * R
+        return [dSdt, dIdt, dRdt]
+
+    ret = odeint(deriv, y0, t, args=(b, k))
+    S, I, R = ret.T
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=t, y=S, name='Susceptibles (S)', line=dict(color='blue', dash='dash')))
+    fig.add_trace(go.Scatter(x=t, y=I, name='Propagadores (I)', line=dict(color='red', width=3)))
+    fig.add_trace(go.Scatter(x=t, y=R, name='Racionales (R)', line=dict(color='cyan', dash='dot')))
+
+    fig.update_layout(
+        title='<b>Dinámica de Propagación de Rumor</b>',
+        xaxis_title='Días',
+        yaxis_title='Personas',
+        paper_bgcolor='white',
+        plot_bgcolor='#f9f9f9',
+        font=dict(family='Poppins', size=12, color='black'),
+        margin=dict(l=50, r=30, t=50, b=80), 
+        hovermode='x unified',
+      
+        legend=dict(orientation="h", y=-0.2, x=0.5, xanchor="center")
+    )
+    return fig
+
+def generar_grafica_app(N, I0, b, k, t_max):
+    R0 = 0
+    S0 = N - I0 - R0
+    y0 = [S0, I0, R0]
+    t = np.linspace(0, t_max, 300)
+
+    def deriv(y, t, b, k):
+        S, I, R = y
+        dSdt = -b * S * I
+        dIdt = b * S * I - k * I
+        dRdt = k * I
+        return [dSdt, dIdt, dRdt]
+
+    ret = odeint(deriv, y0, t, args=(b, k))
+    S, I, R = ret.T
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=t, y=S, name='No Usuarios', line=dict(color='gray', dash='dash')))
+    fig.add_trace(go.Scatter(x=t, y=I, name='Activos', line=dict(color='red', width=3)))
+    fig.add_trace(go.Scatter(x=t, y=R, name='Abandonaron', line=dict(color='green')))
+
+    resultado = "Éxito" if max(I) > N*0.6 else "Fracaso"
+
+    fig.update_layout(
+        title=f'<b>Adopción App: {resultado}</b>',
+        xaxis_title='Días',
+        yaxis_title='Usuarios',
+        paper_bgcolor='white',
+        plot_bgcolor='#f9f9f9',
+        font=dict(family='Poppins', size=12, color='black'),
+        margin=dict(l=50, r=30, t=50, b=80), 
+        hovermode='x unified',
+        
+        legend=dict(orientation="h", y=-0.2, x=0.5, xanchor="center")
+    )
+    return fig
